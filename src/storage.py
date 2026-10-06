@@ -1,6 +1,6 @@
 # storage.py
 #--------------------------------
-from .metadata import update_metadata
+from .metadata import update_metadata, load_metadata
 from .events import log_event
 from .hashing import hash_file
 from pathlib import Path 
@@ -28,8 +28,17 @@ def store_file(filename):
 
 def add_file(filepath):
     hashed_object = store_file(filepath)
+    metadata = load_metadata()
+
+    if metadata.get(filepath) == hashed_object:
+        """
+        This means that the file has not been changed because the hash of the file is already in the metadata.
+        """
+        return
+
     update_metadata(filepath, hashed_object)
     log_event(filepath, hashed_object)
+
 
 def read_object(file_hash):
     object_path = objects_path / file_hash
