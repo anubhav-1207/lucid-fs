@@ -3,7 +3,7 @@ from .watcher import watch as watch_directory
 from .history import file_history
 from .diff import diff as generate_diff
 from .metadata import load_metadata
-from .storage import objects_path
+from .storage import objects_path, read_object
 from .events import events_path
 
 app = typer.Typer()
@@ -46,6 +46,26 @@ def status():
     print("- Tracked:")
     for filepath in metadata:
         print(f"\t{filepath}")
+
+@app.command()
+def restore(filepath: str, version: str):
+    # print(filepath)
+    # print(version)
+    content = read_object(version)
+    
+    versions = file_history(filepath)
+
+    if not versions:
+        print("! - No versions found for this file.")
+        return
+
+    if version not in [entry[1] for entry in versions]:
+        print("! - Version not found for this file.")
+        return
+    
+    with open(filepath,'wb') as file:
+        file.write(content)
+        print(f"- Restored file: {filepath} to version: {version[0:8]}.....")
 
 if __name__ == "__main__":
     app()
