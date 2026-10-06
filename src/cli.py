@@ -29,21 +29,23 @@ def diff(directory: str):
 
 @app.command()
 def status():
+    print("LucidFS Status:")
     metadata = load_metadata()
-    print(f"Tracked files: {len(metadata)}")
-
-    for filepath in metadata:
-        print(f"- {filepath}")
+    print(f"- Tracked files: {len(metadata)}")
 
     objects = list(objects_path.iterdir())
-    print(f"Stored objects: {len(objects)}")
+    print(f"- Stored objects: {len(objects)}")
     
     if events_path.exists():
         with open(events_path, "r") as f:
             events = sum(1 for _ in f)
     else:
         events = 0
-    print(f"Events: {events}")
+    print(f"- Events: {events}")
+
+    print("- Tracked:")
+    for filepath in metadata:
+        print(f"\t{filepath}")
 
 if __name__ == "__main__":
     app()
