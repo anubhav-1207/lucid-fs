@@ -10,6 +10,7 @@ objects_path = home_path / ".lucidfs" / "objects"
 objects_path.mkdir(parents=True, exist_ok=True)
 
 def store_file(filename):
+    """Stores a file in the object_path, returning its hash."""
     hashed_object = hash_file(filename)
     object_path = objects_path / hashed_object
 
@@ -27,6 +28,7 @@ def store_file(filename):
     return hashed_object
 
 def add_file(filepath):
+    """Adds a file to the storage, updating metadata and logging the event."""
     hashed_object = store_file(filepath)
     metadata = load_metadata()
 
@@ -41,6 +43,7 @@ def add_file(filepath):
 
 
 def read_object(file_hash):
+    """Reads the content of a stored object given its hash."""
     object_path = objects_path / file_hash
     with open(object_path, "rb") as f:
         return f.read()

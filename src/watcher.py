@@ -14,6 +14,7 @@ class ChangeHandler(FileSystemEventHandler):
         add_file(event.src_path)
 
 def watch(directory):    
+    """Watches a directory for changes and adds modified files to storage."""
     observer = Observer()
     handler = ChangeHandler()
     observer.schedule(handler, directory, recursive=True)
