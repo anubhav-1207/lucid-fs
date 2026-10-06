@@ -33,7 +33,8 @@ def status():
     print(f"Tracked files: {len(metadata)}")
 
     for filepath in metadata:
-        print(filepath)
+        print(f"- {filepath}")
+
     objects = list(objects_path.iterdir())
     print(f"Stored objects: {len(objects)}")
     
