@@ -1,3 +1,7 @@
+# cli.py
+#----------------------------------------------------
+# handles the main CLI of LucidFS and commands of CLI
+#-----------------------------------------------------
 import typer
 from .watcher import watch as watch_directory
 from .history import file_history
@@ -14,6 +18,7 @@ def main():
 
 @app.command()
 def watch(directory: str):
+    
     watch_directory(directory)
 
 @app.command()
@@ -49,10 +54,7 @@ def status():
 
 @app.command()
 def restore(filepath: str, version: str):
-    # print(filepath)
-    # print(version)
     content = read_object(version)
-    
     versions = file_history(filepath)
 
     if not versions:
