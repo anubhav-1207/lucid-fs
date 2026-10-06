@@ -18,22 +18,25 @@ def main():
 
 @app.command()
 def watch(directory: str):
-    
+    """Watches the directory for changes."""
     watch_directory(directory)
 
 @app.command()
 def history(file_path: str):
+    """Gives the history of changes of a file."""
     history = file_history(file_path)
     for entry in history:
         print(entry)
 
 @app.command()
 def diff(directory: str):
+    """Shows the diff of a file."""
     differences = generate_diff(directory)
     print(differences)
 
 @app.command()
 def status():
+    """Shows the status of the directory."""
     print("LucidFS Status:")
     metadata = load_metadata()
     print(f"- Tracked files: {len(metadata)}")
@@ -54,6 +57,7 @@ def status():
 
 @app.command()
 def restore(filepath: str, version: str):
+    """Restores a file to a specific version, where version is the hash."""
     content = read_object(version)
     versions = file_history(filepath)
 
