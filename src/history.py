@@ -4,6 +4,7 @@ import json
 from .events import events_path
 
 def file_history(filepath):
+    """Returns the history of a file with timestamp and hash."""
     with open(events_path, "r") as f:
         hashes = []
         for line in f:
